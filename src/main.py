@@ -6,7 +6,7 @@ from ImgSites.PostImg import PostImg
 from ImgSites.ImgBB import ImgBB
 
 
-SUPPORTED_IMG_SITES = ["imgbb", "postimg", "imgur"]
+SUPPORTED_IMG_SITES = ["imgbb", "postimg"]
 
 def ask_for_image_site():
     while True:
