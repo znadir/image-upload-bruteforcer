@@ -1,17 +1,18 @@
 import concurrent.futures
-import requests
 import random
-import time
-import string
 from loguru import logger
 import sys
+from ImgSites.PostImg import PostImg
+from ImgSites.ImgBB import ImgBB
 
+
+SUPPORTED_IMG_SITES = ["imgbb", "postimg", "imgur"]
 
 def ask_for_image_site():
     while True:
-        site = input("Which image site do you want to use? (imgbb, postimg) ").lower()
+        site = input(f"Which image site do you want to use? ({', '.join(SUPPORTED_IMG_SITES)}) ").lower()
 
-        if site in ["imgbb", "postimg"]:
+        if site in SUPPORTED_IMG_SITES:
             break
         else:
             logger.error("Please enter a valid image site.")
@@ -32,13 +33,6 @@ def ask_for_number(input_text, default_val = None):
 
     return int(amount)
 
-def check_img(domain_name:str, img_id:str, timeout = 0):
-    time.sleep(timeout)
-    response = requests.get(f'https://{domain_name}/{img_id}')
-
-    is_valid = response.status_code == 200
-
-    return is_valid
 
 def main():
     logger.remove()
@@ -51,22 +45,18 @@ def main():
     timeout = ask_for_number("How much timeout? (default 0) ", 0)
 
     if site == "imgbb":
-        domain_name = "ibb.co"
-        test_valid_id = "rbPzWq8"
-        id_choices = string.ascii_letters + string.digits, 7
+        img_site = ImgBB()
     elif site == "postimg":
-        domain_name = "postimg.cc"
-        test_valid_id = "D4792gr1"
-        id_choices = string.ascii_letters + string.digits, 7
+        img_site = PostImg()
     else:
         raise ValueError("Invalid site name.")
 
-    image_ids = [''.join(random.choices(id_choices[0], k=id_choices[1])) for _ in range(amount_gen)]
+    image_ids = [''.join(random.choices(img_site.id_choices[0], k=img_site.id_choices[1])) for _ in range(amount_gen)]
     invalid_ids = []
     valid_ids = []
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=amount_thread) as executor:
-        future_data = {executor.submit(check_img, domain_name, img_id, timeout):img_id for img_id in image_ids}
+        future_data = {executor.submit(img_site.check_img, img_id, timeout):img_id for img_id in image_ids}
 
         for future in concurrent.futures.as_completed(future_data):
             img_id = future_data[future]
@@ -92,10 +82,10 @@ def main():
     else:
         logger.error("No valid IDs found.")
 
-    if not check_img(domain_name, test_valid_id):
+    if not img_site.check_img(img_site.test_valid_id):
         logger.error("Your IP might be banned/ratelimited from the image site.")
     else:
-        logger.info("Your IP seems to be working fine with the image site.")
+        logger.success("Your IP seems to be working fine with the image site.")
 
 if __name__ == '__main__':
     main()
