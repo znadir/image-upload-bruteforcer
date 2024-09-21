@@ -71,7 +71,7 @@ def main():
                     logger.success(f"ID {img_id} is valid.")
                 else:
                     invalid_ids.append(img_id)
-                    logger.error(f"ID {img_id} is invalid.")
+                    logger.error(f"ID {img_id} is invalid. Found: {', '.join(valid_ids) if len(valid_ids) > 0 else 'None'}")
 
             except Exception as exc:
                 logger.error(f"An error occurred with {img_id}: {exc}")
