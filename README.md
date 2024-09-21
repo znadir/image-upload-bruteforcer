@@ -1,6 +1,8 @@
-## Image Upload Scraper
+## Image Upload Bruteforcer
 
 Find Random images from upload image sites by bruteforcing the image ID.
+
+There are about 3.5 trillion possible combinations for a valid ID. If the site hosts X images, the chance of finding a valid image is X out of 3.5 trillion. So it's not very likely to find a valid image. But it's still fun to try.
 
 ## ⚠️ Warning
 
