@@ -8,6 +8,7 @@ This tool is for educational purposes only. You could get IP banned from image u
 
 ## Supported sites
 
+- [x] FreeImage.Host (Recommended)
 - [x] ImgBB (Do not use without proxies)
 - [x] PostImg (Do not use without proxies)
 

@@ -4,9 +4,10 @@ from loguru import logger
 import sys
 from ImgSites.PostImg import PostImg
 from ImgSites.ImgBB import ImgBB
+from ImgSites.FreeImageHost import FreeImageHost
 
 
-SUPPORTED_IMG_SITES = ["imgbb", "postimg"]
+SUPPORTED_IMG_SITES = ["freeimagehost", "imgbb", "postimg"]
 
 def ask_for_image_site():
     while True:
@@ -47,6 +48,8 @@ def main():
         img_site = ImgBB()
     elif site == "postimg":
         img_site = PostImg()
+    elif site == "freeimagehost":
+        img_site = FreeImageHost()
     else:
         raise ValueError("Invalid site name.")
 
@@ -84,7 +87,7 @@ def main():
     if not img_site.check_img(img_site.test_valid_id):
         logger.error("Your IP might be banned/ratelimited from the image site.")
     else:
-        logger.success("Your IP seems to be working fine with the image site.")
+        logger.success(f"Your IP seems to be working fine with {site}.")
 
 if __name__ == '__main__':
     main()
