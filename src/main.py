@@ -33,7 +33,6 @@ def ask_for_number(input_text, default_val = None):
 
     return int(amount)
 
-
 def main():
     logger.remove()
     logger.add(sys.stderr, format="{time:HH:mm:ss} | <level>{message}</level>")

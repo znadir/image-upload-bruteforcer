@@ -1,6 +1,7 @@
 from ImgSite import ImgSite
 import string
 
+
 class PostImg(ImgSite):
     def __init__(self):
         domain_name = "postimg.cc"

@@ -1,6 +1,7 @@
 from ImgSite import ImgSite
 import string
 
+
 class ImgBB(ImgSite):
     def __init__(self):
         domain_name = "ibb.co"

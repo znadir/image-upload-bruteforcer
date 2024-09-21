@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class ImgSite():
     """
     Abstract class for image sites.
